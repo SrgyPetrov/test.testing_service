@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>{% block title %}Tests{% endblock title %}</title>
+		<title>{% block title %}Тесты{% endblock title %}</title>
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 			crossorigin="anonymous">
@@ -22,6 +22,27 @@
 	</head>
 
 	<body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="{% url 'quizzes' %}">Тесты</a>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+						<li>
+							<p class="navbar-text">{{ user.username }} (<a href="{% url 'logout' %}">Выход</a>)</p>
+						</li>
+					{% else %}
+						<li>
+							<a href="{% url 'login' %}">Вход</a>
+						</li>
+						<li>
+							<a href="{% url 'signup' %}">Регистрация</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
 		<div class="container">
 			{% block content %}{% endblock content %}
 		</div>

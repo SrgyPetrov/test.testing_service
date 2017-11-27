@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+	<form class="form-login text-center" method="POST">
+		{% csrf_token %}
+		<h2 class="form-heading">Вход</h2>
+		{% for error in form.non_field_errors %}
+			<div class="alert alert-danger alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				{{ error }}
+			</div>
+		{% endfor %}
+		<div class="form-group {% if form.username.errors %}has-error{% endif %}">
+			{{ form.username|attr:"class:form-control"|attr:"placeholder:Имя пользователя" }}
+			{% for error in form.username.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
+		</div>
+		<div class="form-group {% if form.password.errors %}has-error{% endif %}">
+			{{ form.password|attr:"class:form-control"|attr:"placeholder:Пароль" }}
+			{% for error in form.password.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
+		</div>
+		<button type="submit" class="btn btn-default">Войти</button>
+	</form>
+{% endblock content %}
