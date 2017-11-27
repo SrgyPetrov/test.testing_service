@@ -10,7 +10,7 @@ class UserCreateView(CreateView):
 
     form_class = UserCreationForm
     template_name = 'users/signup.html'
-    success_url = reverse_lazy('quizzes')
+    success_url = reverse_lazy('quizzes_list')
 
     def form_valid(self, form):
         result = super().form_valid(form)

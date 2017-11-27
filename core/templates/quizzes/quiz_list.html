@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row text-center">
+		{% for obj in object_list %}
+			<div class="col-md-4">
+				<h3>{{ obj.title }}</h3>
+				<p>{{ obj.description|default_if_none:"" }}</p>
+				<p>
+					<a class="btn btn-default" href="{{ obj.get_absolute_url }}" role="button">Пройти &raquo;</a>
+				</p>
+			</div>
+		{% empty %}
+			Тесты отсутствуют
+		{% endfor %}
+	</div>
+	{% if is_paginated %}
+		<div class="row">
+			<nav>
+				<ul class="pager">
+					<li {% if not page_obj.has_previous %}class="disabled" {% endif %}>
+						<a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">Назад</a>
+					</li>
+					<li {% if not page_obj.has_next %}class="disabled" {% endif %}>
+						<a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">Вперед</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	{% endif %}
+{% endblock content %}
