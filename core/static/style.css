@@ -1,0 +1,13 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.form-registration {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-registration .form-registration-heading {
+    padding-bottom: 10px;
+}

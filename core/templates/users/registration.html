@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+	{% for error in form.non_field_errors %}
+		<div class="alert alert-danger alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			{{ error }}
+		</div>
+	{% endfor %}
+	<form class="form-registration text-center" method="POST">
+		{% csrf_token %}
+		<h2 class="form-registration-heading">Регистрация</h2>
+		<div class="form-group {% if form.username.errors %}has-error{% endif %}">
+			{{ form.username|attr:"class:form-control"|attr:"placeholder:Имя пользователя" }}
+			{% for error in form.username.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
+		</div>
+		<div class="form-group {% if form.password1.errors %}has-error{% endif %}">
+			{{ form.password1|attr:"class:form-control"|attr:"placeholder:Пароль" }}
+			{% for error in form.password1.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
+		</div>
+		<div class="form-group {% if form.password2.errors %}has-error{% endif %}">
+			{{ form.password2|attr:"class:form-control"|attr:"placeholder:Подтверждение пароля" }}
+			{% for error in form.password2.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
+		</div>
+		<button type="submit" class="btn btn-default">Зарегистрироваться</button>
+	</form>
+{% endblock content %}
