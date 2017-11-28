@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div class="row">
+	<div class="row quizzes">
 		{% for obj in object_list %}
-			<div class="panel panel-default">
+			<div class="panel {% if obj.answered_count == obj.questions.all|length %}panel-completed{% else %}panel-default{% endif %}">
 				<div class="panel-heading">
 					<h3 class="panel-title">{{ obj.title }}</h3>
 				</div>
 				<div class="panel-body">
 					<p>{{ obj.description|default_if_none:"" }}</p>
 					<p>
-						<a class="btn btn-default" href="{{ obj.get_absolute_url }}" role="button">Пройти &raquo;</a>
+						{% if obj.answered_count == obj.questions.all|length %}
+							<a class="btn btn-default" href="{% url 'quizzes_result' obj.pk %}" role="button">Посмотреть результаты &raquo;</a>
+						{% else %}
+							<a class="btn btn-default" href="{% url 'quizzes_detail' obj.pk %}" role="button">Пройти &raquo;</a>
+						{% endif %}
 					</p>
 				</div>
 			</div>

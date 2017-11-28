@@ -9,10 +9,6 @@
 	padding-bottom: 10px;
 }
 
-.quiz {
-	min-height: 300px;
-}
-
 .question {
 	font-size: larger;
 }
@@ -41,4 +37,18 @@
 
 .results .badge-success {
 	background-color: #468847;
+}
+
+.quizzes .panel-completed {
+	border-color: #dddddd;
+}
+
+.quizzes .panel-completed .panel-heading {
+	background-color: #808181;
+	border-color: #808181;
+	color: #fcfcfc;
+}
+
+.quizzes .panel-completed .panel-body {
+	background-color: #FAFAFA;
 }

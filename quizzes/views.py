@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
+from django.db.models import Case, Count, IntegerField, When
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic.detail import (DetailView, SingleObjectMixin,
@@ -14,8 +15,20 @@ from .utils import (get_question_number, get_user_current_question,
 
 class QuizzesListView(LoginRequiredMixin, ListView):
 
-    queryset = Quiz.objects.filter(is_active=True)
     paginate_by = 5
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Quiz.objects.filter(is_active=True)
+        qs = qs.filter(questions__isnull=False)
+        qs = qs.prefetch_related('questions')
+        qs = qs.annotate(answered_count=Count(
+            Case(
+                When(questions__answers__users=user, then=1),
+                output_field=IntegerField()
+            )
+        ))
+        return qs
 
 
 class QuestionView(AccessMixin, ProcessFormView, SingleObjectMixin,

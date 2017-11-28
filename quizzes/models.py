@@ -1,7 +1,6 @@
 import textwrap
 
 from django.db import models
-from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from .querysets import AnswerQuerySet
@@ -21,9 +20,6 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        return reverse('quizzes_detail', args=[self.pk])
 
 
 class Question(models.Model):
