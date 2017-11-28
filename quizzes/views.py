@@ -14,30 +14,33 @@ class QuizzesListView(ListView):
 
 class QuestionView(DetailView, ProcessFormView, FormMixin):
 
-    model = Question
     form_class = QuestionForm
     template_name = 'quizzes/quiz_detail.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.pk = self.kwargs.get(self.pk_url_kwarg)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return Question.objects.filter(quiz_id=self.pk)
+
     def get_object(self):
         user = self.request.user
-        pk = self.kwargs.get(self.pk_url_kwarg)
-        user_answers = user.answers.filter(question__quiz_id=pk)
-        qs = self.model.objects.filter(quiz_id=pk)
-        qs = qs.exclude(answers__in=user_answers)
+        user_answers = user.answers.filter(question__quiz_id=self.pk)
+        qs = self.get_queryset().exclude(answers__in=user_answers)
         return qs.first()
+
+    def get_current_number(self):
+        pks = list(self.get_queryset().values_list('pk', flat=True))
+        return {
+            'questions_count': len(pks),
+            'question_number': pks.index(self.object.pk) + 1
+        }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pk = self.kwargs.get(self.pk_url_kwarg)
-        questions = self.model.objects.filter(quiz_id=pk)
-        question_pks = list(questions.values_list('pk', flat=True))
-        context['questions_count'] = len(question_pks)
-        context['question_number'] = question_pks.index(self.object.pk) + 1
+        context.update(self.get_current_number())
         return context
-
-    def get_success_url(self):
-        pk = self.kwargs.get(self.pk_url_kwarg)
-        return reverse('quizzes_detail', kwargs={'pk': pk})
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -52,3 +55,6 @@ class QuestionView(DetailView, ProcessFormView, FormMixin):
         kwargs = super().get_form_kwargs()
         kwargs['answers'] = self.object.answers
         return kwargs
+
+    def get_success_url(self):
+        return reverse('quizzes_detail', kwargs={'pk': self.pk})
