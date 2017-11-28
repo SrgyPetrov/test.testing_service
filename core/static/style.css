@@ -25,3 +25,20 @@
 .form-answers button {
 	margin-top: 10px;
 }
+
+.results {
+	max-width: 400px;
+	margin: 25px auto;
+}
+
+.results .badge-danger {
+	background-color: #b94a48;
+}
+
+.results .badge-default {
+	background-color: #999999;
+}
+
+.results .badge-success {
+	background-color: #468847;
+}

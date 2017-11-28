@@ -4,6 +4,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from .querysets import AnswerQuerySet
+
 
 class Quiz(models.Model):
 
@@ -46,6 +48,8 @@ class Answer(models.Model):
                                  related_name='answers')
     text = models.CharField(_('Text'), max_length=255)
     is_valid = models.BooleanField(default=False)
+
+    objects = AnswerQuerySet.as_manager()
 
     class Meta:
         verbose_name = _('Answer')

@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
+from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic.detail import (DetailView, SingleObjectMixin,
@@ -8,7 +8,8 @@ from django.views.generic.list import ListView
 
 from .forms import QuestionForm
 from .models import Quiz
-from .utils import get_question_number, get_user_current_question
+from .utils import (get_question_number, get_user_current_question,
+                    get_user_results)
 
 
 class QuizzesListView(LoginRequiredMixin, ListView):
@@ -63,4 +64,5 @@ class QuizResultView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update(get_user_results(self.request.user, self.object.pk))
         return context

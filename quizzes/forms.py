@@ -20,5 +20,6 @@ class QuestionForm(forms.Form):
         super().__init__(**kwargs)
         self.fields['answers'] = forms.ModelMultipleChoiceField(
             widget=forms.CheckboxSelectMultiple,
-            queryset=answers
+            queryset=answers,
+            error_messages={'required': _('You must select an answer option.')}
         )
