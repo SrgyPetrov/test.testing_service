@@ -15,9 +15,14 @@ class User(AbstractUser):
 
 class UserAnswer(models.Model):
 
-    user = models.ForeignKey('users.User')
-    answer = models.ForeignKey('quizzes.Answer')
+    user = models.ForeignKey('users.User', verbose_name=_('User'))
+    answer = models.ForeignKey('quizzes.Answer', verbose_name=_('Answer'))
 
     class Meta:
         verbose_name = _('User answer')
         verbose_name_plural = _('User answers')
+
+    def __str__(self):
+        return 'user_id: {}, answer_id: {}'.format(
+            self.user_id, self.answer_id
+        )

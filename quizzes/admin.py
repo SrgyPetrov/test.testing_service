@@ -17,8 +17,13 @@ class QuestionAdmin(SortableAdminMixin, admin.ModelAdmin):
 
     inlines = [AnswerInline]
     list_filter = ['quiz']
-    # list_select_related = ['quiz']
 
 
-admin.site.register(Quiz)
+class QuizAdmin(admin.ModelAdmin):
+
+    list_display = ['title', 'created_at', 'is_active']
+    list_editable = ['is_active']
+
+
+admin.site.register(Quiz, QuizAdmin)
 admin.site.register(Question, QuestionAdmin)

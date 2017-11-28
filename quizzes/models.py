@@ -27,7 +27,7 @@ class Question(models.Model):
     quiz = models.ForeignKey(Quiz, verbose_name=_('Quiz'),
                              related_name='questions')
     text = models.TextField(_('Text'))
-    order = models.PositiveSmallIntegerField(default=0)
+    order = models.PositiveSmallIntegerField(_('Order'), default=0)
 
     class Meta:
         verbose_name = _('Question')
@@ -43,7 +43,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, verbose_name=_('Question'),
                                  related_name='answers')
     text = models.CharField(_('Text'), max_length=255)
-    is_valid = models.BooleanField(default=False)
+    is_valid = models.BooleanField(_('Is valid'), default=False)
 
     objects = AnswerQuerySet.as_manager()
 

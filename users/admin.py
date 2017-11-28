@@ -11,7 +11,13 @@ from .models import User, UserAnswer
 
 class UserAnswerAdmin(admin.ModelAdmin):
 
-    list_filter = ('user__username',)
+    list_display = ['user', 'answer', 'question']
+    list_filter = ['user__username', 'answer__question__quiz']
+
+    def question(self, instance):
+        return instance.answer.question
+
+    question.short_description = _('Question')
 
 
 class UserAdmin(BaseUserAdmin):
@@ -19,7 +25,7 @@ class UserAdmin(BaseUserAdmin):
     stats_template = 'admin/users/stats.html'
     readonly_fields = ['stats']
     fieldsets = BaseUserAdmin.fieldsets + (
-        (_('Statistic'), {'fields': ('stats',)}),
+        (_('Statistic'), {'fields': ['stats']}),
     )
 
     def stats(self, instance):
@@ -27,7 +33,7 @@ class UserAdmin(BaseUserAdmin):
         stats = get_user_stats(instance)
         return template.render({'stats': stats})
 
-    stats.short_description = _("Statistic")
+    stats.short_description = _('Quiz results')
 
 
 admin.site.register(User, UserAdmin)
