@@ -6,7 +6,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from quizzes.utils import get_user_stats
 
-from .models import User
+from .models import User, UserAnswer
+
+
+class UserAnswerAdmin(admin.ModelAdmin):
+
+    list_filter = ('user__username',)
 
 
 class UserAdmin(BaseUserAdmin):
@@ -26,4 +31,5 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(UserAnswer, UserAnswerAdmin)
 admin.site.unregister(Group)

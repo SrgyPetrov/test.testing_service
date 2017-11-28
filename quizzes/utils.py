@@ -1,6 +1,8 @@
 from itertools import groupby
 from operator import attrgetter
 
+from users.models import UserAnswer
+
 from .models import Question
 
 
@@ -45,3 +47,9 @@ def get_results_from_answers(answers):
         'invalid_count': invalid_count,
         'percent': round(percent, 2)
     }
+
+
+def create_user_answers(user, answers):
+    UserAnswer.objects.bulk_create(
+        UserAnswer(user=user, answer=answer) for answer in answers
+    )

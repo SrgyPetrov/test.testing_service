@@ -9,8 +9,8 @@ from django.views.generic.list import ListView
 
 from .forms import QuestionForm
 from .models import Quiz
-from .utils import (get_question_number, get_user_current_question,
-                    get_user_results)
+from .utils import (create_user_answers, get_question_number,
+                    get_user_current_question, get_user_results)
 
 
 class QuizzesListView(LoginRequiredMixin, ListView):
@@ -19,12 +19,13 @@ class QuizzesListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
+        answered_pks = user.answers.values_list('question_id', flat=True)
         qs = Quiz.objects.filter(is_active=True)
         qs = qs.filter(questions__isnull=False)
         qs = qs.prefetch_related('questions')
         qs = qs.annotate(answered_count=Count(
             Case(
-                When(questions__answers__users=user, then=1),
+                When(questions__pk__in=answered_pks, then=1),
                 output_field=IntegerField()
             )
         ))
@@ -52,8 +53,7 @@ class QuestionView(AccessMixin, ProcessFormView, SingleObjectMixin,
         return context
 
     def form_valid(self, form):
-        answers = form.cleaned_data['answers']
-        self.request.user.answers.add(*answers)
+        create_user_answers(self.request.user, form.cleaned_data['answers'])
         return super().form_valid(form)
 
     def get_form_kwargs(self):
