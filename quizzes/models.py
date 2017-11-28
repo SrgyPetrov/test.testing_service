@@ -29,12 +29,12 @@ class Question(models.Model):
     quiz = models.ForeignKey(Quiz, verbose_name=_('Quiz'),
                              related_name='questions')
     text = models.TextField(_('Text'))
-    number = models.PositiveSmallIntegerField(_('Number'), default=0)
+    order = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
         verbose_name = _('Question')
         verbose_name_plural = _('Questions')
-        ordering = ['number']
+        ordering = ['order']
 
     def __str__(self):
         return textwrap.shorten(self.text, width=100, placeholder="...")
