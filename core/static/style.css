@@ -28,7 +28,7 @@
 }
 
 .results .badge-danger {
-	background-color: #b94a48;
+	background-color: #d9230f;
 }
 
 .results .badge-default {
@@ -51,4 +51,16 @@
 
 .quizzes .panel-completed .panel-body {
 	background-color: #FAFAFA;
+}
+
+.quizzes .panel-completed .btn-default {
+	background-color: #808181;
+	background-image: none;
+	border: 1px solid #808181;
+}
+
+.quizzes .panel-default .btn-primary {
+	background-color: #d9230f;
+	background-image: none;
+	border: 1px solid #d9230f;
 }

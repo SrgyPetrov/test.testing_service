@@ -13,7 +13,7 @@
 						{% if obj.answered_count == obj.questions.all|length %}
 							<a class="btn btn-default" href="{% url 'quizzes_result' obj.pk %}" role="button">Посмотреть результаты &raquo;</a>
 						{% else %}
-							<a class="btn btn-default" href="{% url 'quizzes_detail' obj.pk %}" role="button">Пройти &raquo;</a>
+							<a class="btn btn-primary" href="{% url 'quizzes_detail' obj.pk %}" role="button">Пройти &raquo;</a>
 						{% endif %}
 					</p>
 				</div>
