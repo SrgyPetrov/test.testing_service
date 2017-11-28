@@ -1,3 +1,6 @@
+from itertools import groupby
+from operator import attrgetter
+
 from .models import Question
 
 
@@ -19,8 +22,23 @@ def get_question_number(quiz_id, question_id):
 
 def get_user_results(user, quiz_id):
     answers = user.answers.filter(question__quiz_id=quiz_id)
-    valid_count = answers.valid().count()
-    invalid_count = answers.invalid().count()
+    answers = answers.values_list('is_valid', flat=True)
+    return get_results_from_answers(answers)
+
+
+def get_user_stats(user):
+    stats = {}
+    answers = user.answers.all().order_by('question__quiz_id')
+    answers = answers.select_related('question__quiz')
+    for quiz, items in groupby(answers, attrgetter('question.quiz')):
+        stats[quiz] = get_results_from_answers(i.is_valid for i in items)
+    return stats
+
+
+def get_results_from_answers(answers):
+    answers = list(answers)
+    valid_count = answers.count(True)
+    invalid_count = answers.count(False)
     percent = valid_count * 100 / (valid_count + invalid_count)
     return {
         'valid_count': valid_count,

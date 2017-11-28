@@ -1,0 +1,8 @@
+{% for quiz, results in stats.items %}
+	<div style="padding-bottom: 10px;">
+		<a href="{% url 'admin:quizzes_quiz_change' quiz.pk %}">{{ quiz.title }}</a>:
+		 Количество правильных ответов: {{ results.valid_count }},
+		 Количество неправильных ответов:{{ results.invalid_count }},
+		 Процент правильных ответов: {{ results.percent }}%
+	</div>
+{% endfor %}
