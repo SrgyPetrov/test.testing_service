@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div class="row text-center">
+	<div class="row">
 		{% for obj in object_list %}
-			<div class="col-md-4">
-				<h3>{{ obj.title }}</h3>
-				<p>{{ obj.description|default_if_none:"" }}</p>
-				<p>
-					<a class="btn btn-default" href="{{ obj.get_absolute_url }}" role="button">Пройти &raquo;</a>
-				</p>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{{ obj.title }}</h3>
+				</div>
+				<div class="panel-body">
+					<p>{{ obj.description|default_if_none:"" }}</p>
+					<p>
+						<a class="btn btn-default" href="{{ obj.get_absolute_url }}" role="button">Пройти &raquo;</a>
+					</p>
+				</div>
 			</div>
 		{% empty %}
-			Тесты отсутствуют
+			<div class="page-header">
+				<h1>Тесты отсутствуют</h1>
+			</div>
 		{% endfor %}
 	</div>
 	{% if is_paginated %}

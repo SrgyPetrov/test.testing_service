@@ -8,3 +8,20 @@
 .form-heading {
 	padding-bottom: 10px;
 }
+
+.quiz {
+	min-height: 300px;
+}
+
+.question {
+	font-size: larger;
+}
+
+.form-answers .checkbox {
+	padding: 10px 0;
+	font-size: larger;
+}
+
+.form-answers button {
+	margin-top: 10px;
+}

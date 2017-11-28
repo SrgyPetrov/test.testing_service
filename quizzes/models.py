@@ -1,6 +1,7 @@
 import textwrap
 
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -8,14 +9,19 @@ class Quiz(models.Model):
 
     title = models.CharField(_('Title'), max_length=192)
     description = models.TextField(_('Description'), blank=True, null=True)
-    is_active = models.BooleanField('Is active?', default=True)
+    is_active = models.BooleanField(_('Is active?'), default=True)
+    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
 
     class Meta:
         verbose_name = _('Quiz')
         verbose_name_plural = _('Quizzes')
+        ordering = ['created_at']
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('quizzes_detail', args=[self.pk])
 
 
 class Question(models.Model):
