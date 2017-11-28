@@ -1,6 +1,9 @@
+from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import DetailView, ListView
+from django.views.generic.detail import (DetailView, SingleObjectMixin,
+                                         SingleObjectTemplateResponseMixin)
 from django.views.generic.edit import FormMixin, ProcessFormView
+from django.views.generic.list import ListView
 
 from .forms import QuestionForm
 from .models import Question, Quiz
@@ -12,13 +15,17 @@ class QuizzesListView(ListView):
     paginate_by = 5
 
 
-class QuestionView(DetailView, ProcessFormView, FormMixin):
+class QuestionView(ProcessFormView, SingleObjectMixin,
+                   SingleObjectTemplateResponseMixin, FormMixin):
 
     form_class = QuestionForm
-    template_name = 'quizzes/quiz_detail.html'
+    template_name = 'quizzes/quiz_question.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.pk = self.kwargs.get(self.pk_url_kwarg)
+        self.object = self.get_object()
+        if self.object is None:
+            return redirect('quizzes_result', pk=self.pk)
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -42,10 +49,6 @@ class QuestionView(DetailView, ProcessFormView, FormMixin):
         context.update(self.get_current_number())
         return context
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        return super().post(request, *args, **kwargs)
-
     def form_valid(self, form):
         answers = form.cleaned_data['answers']
         self.request.user.answers.add(*answers)
@@ -58,3 +61,8 @@ class QuestionView(DetailView, ProcessFormView, FormMixin):
 
     def get_success_url(self):
         return reverse('quizzes_detail', kwargs={'pk': self.pk})
+
+
+class QuizResultView(DetailView):
+
+    model = Quiz
