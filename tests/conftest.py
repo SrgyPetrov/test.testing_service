@@ -1,7 +1,9 @@
-import pytest
 from contextlib import contextmanager
+
+import pytest
 from django.core.management import call_command
 from django.db import connection
+from django.test.client import Client
 from django.test.utils import CaptureQueriesContext
 
 
@@ -24,3 +26,10 @@ def django_assert_num_queries():
                     num, len(context))
                 pytest.fail(msg)
     return _assert_num_queries
+
+
+@pytest.fixture()
+def admin_client(db, admin_user):
+    client = Client()
+    client.login(username=admin_user.username, password='qwerty')
+    return client
