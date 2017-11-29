@@ -12,4 +12,3 @@ stop:
 
 test:
 	docker run --rm test_service runtests
-
