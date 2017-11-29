@@ -4,5 +4,6 @@
 
 .python-version
 .vscode/
+.cache/
 
 __pycache__

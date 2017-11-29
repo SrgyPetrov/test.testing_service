@@ -1,0 +1,52 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$Sl6BJTiz7T0l$vUnEvODfDuyBL8mSDqDG53FcFpmti7G++CzmZ9xuTAY=",
+        "last_login": "2017-11-28T18:03:01.744Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "asd@asd.asd",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-11-28T17:42:50.525Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.useranswer",
+    "pk": 10,
+    "fields": {
+        "user": 1,
+        "answer": 4
+    }
+},
+{
+    "model": "users.useranswer",
+    "pk": 11,
+    "fields": {
+        "user": 1,
+        "answer": 43
+    }
+},
+{
+    "model": "users.useranswer",
+    "pk": 12,
+    "fields": {
+        "user": 1,
+        "answer": 45
+    }
+},
+{
+    "model": "users.useranswer",
+    "pk": 13,
+    "fields": {
+        "user": 1,
+        "answer": 16
+    }
+}
+]

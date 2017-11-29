@@ -1,7 +1,8 @@
 Django==1.11.7
-django-debug-toolbar==1.9.1
-pytest==3.2.5
-django-extensions==1.9.7
-ipython==6.2.1
-django-widget-tweaks==1.4.1
 django-admin-sortable2==0.6.16
+django-debug-toolbar==1.9.1
+django-extensions==1.9.7
+django-widget-tweaks==1.4.1
+ipython==6.2.1
+pytest==3.2.5
+pytest-django==3.1.2
