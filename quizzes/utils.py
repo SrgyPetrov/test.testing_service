@@ -41,7 +41,10 @@ def get_results_from_answers(answers):
     answers = list(answers)
     valid_count = answers.count(True)
     invalid_count = answers.count(False)
-    percent = valid_count * 100 / (valid_count + invalid_count)
+    if valid_count or invalid_count:
+        percent = valid_count * 100 / (valid_count + invalid_count)
+    else:
+        percent = 0.0
     return {
         'valid_count': valid_count,
         'invalid_count': invalid_count,
