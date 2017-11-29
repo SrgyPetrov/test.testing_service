@@ -1,0 +1,11 @@
+**/*.pyc
+**/*.mo
+**/*.md
+**/*.sqlite3
+
+.python-version
+.vscode/
+.cache/
+.git/
+
+**/__pycache__
