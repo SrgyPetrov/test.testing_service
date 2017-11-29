@@ -1,4 +1,4 @@
-.PHONY: build start stop test
+.PHONY: build start stop test exec shell
 
 build:
 	docker build . -t test_service
@@ -12,3 +12,9 @@ stop:
 
 test:
 	docker run --rm test_service runtests
+
+shell:
+	docker run -it --rm test_service shell
+
+exec:
+	docker run -it --rm test_service $(cmd)

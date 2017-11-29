@@ -10,6 +10,9 @@ case "$1" in
 	"runtests")
 		py.test -x /usr/src/app/tests/
 	;;
+    "shell")
+		python manage.py shell
+	;;
 	*)
 		exec "$@"
 esac
