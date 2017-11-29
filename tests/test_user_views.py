@@ -6,8 +6,7 @@ from django.urls import reverse
 def test_login(client):
     response = client.get(reverse('login'))
     assert response.status_code == 200
-    template_names = [t.name for t in response.templates]
-    assert 'users/login.html' in template_names
+    assert response.templates[0].name == 'users/login.html'
     assert not response.context[0]['user'].is_authenticated
     assert not response.context[0]['form'].errors
 
@@ -40,8 +39,7 @@ def test_login_invalid(client):
 def test_signup(client):
     response = client.get(reverse('signup'))
     assert response.status_code == 200
-    template_names = [t.name for t in response.templates]
-    assert 'users/signup.html' in template_names
+    assert response.templates[0].name == 'users/signup.html'
     assert not response.context[0]['user'].is_authenticated
     assert not response.context[0]['form'].errors
 
@@ -53,7 +51,7 @@ def test_signup_valid(client):
         {'username': 'user', 'password1': 'qwerty', 'password2': 'qwerty'},
         follow=True
     )
-    assert response.redirect_chain == [('/', 302)]
+    assert response.redirect_chain == [(reverse('quizzes_list'), 302)]
     assert response.status_code == 200
     assert response.context[0]['user'].is_authenticated
 
